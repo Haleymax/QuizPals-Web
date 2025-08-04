@@ -1,5 +1,107 @@
-# Vue 3 + TypeScript + Vite
+# QuizPals - AI智能刷题软件
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+QuizPals是一个基于AI的智能刷题平台，能够将您的Markdown笔记自动转换为选择题，帮助您更好地巩固和复习学习内容。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 🚀 功能特色
+
+- **📝 智能解析**: 上传Markdown文档，AI自动解析并生成高质量的选择题
+- **🎯 个性化学习**: 基于您自己的笔记内容生成题目，学习更有针对性
+- **📊 实时反馈**: 即时显示答题结果和正确率，帮助了解学习进度
+- **💡 答案解析**: 提供详细的答案解释，帮助深入理解知识点
+- **📱 响应式设计**: 支持多设备访问，随时随地学习
+- **🎨 美观界面**: 现代化的UI设计，提供优秀的用户体验
+
+## 🛠️ 技术栈
+
+- **前端框架**: Vue 3 + TypeScript
+- **UI组件库**: Naive UI
+- **构建工具**: Vite
+- **路由管理**: Vue Router
+- **样式处理**: CSS3 + 渐变背景
+
+## 📁 项目架构
+
+基于Vue 3 + TypeScript的模块化架构设计，支持功能扩展和组件复用：
+
+```
+QuizPals-Web/
+├── src/
+│   ├── views/          # 页面视图层
+│   ├── components/     # 可复用组件
+│   ├── router/         # 路由管理
+│   └── assets/         # 静态资源
+├── public/             # 公共资源
+└── 配置文件...
+```
+
+> 💡 **扩展性设计**: 采用组件化架构，支持快速添加新的题型、文件格式解析器和UI主题，便于后续功能迭代和第三方集成。
+
+## 🎮 使用方法
+
+### 1. 上传Markdown文档
+- 访问上传页面
+- 选择或拖拽您的`.md`格式笔记文件
+- 等待AI解析生成题目
+
+### 2. 开始答题
+- 系统自动跳转到答题页面
+- 阅读题目并选择答案
+- 查看实时得分和进度
+
+### 3. 查看结果
+- 完成所有题目后查看总体表现
+- 查看答案解析了解错误原因
+- 重新开始或上传新文档继续学习
+
+## 🚀 快速开始
+
+### 环境要求
+- Node.js 16+
+- npm 或 yarn
+
+### 安装依赖
+```bash
+npm install
+```
+
+### 启动开发服务器
+```bash
+npm run dev
+```
+
+### 构建生产版本
+```bash
+npm run build
+```
+
+## 📝 支持格式
+
+目前支持的文档格式：
+- **Markdown (.md)**: 支持标准Markdown语法的笔记文档
+
+## 🎯 使用场景
+
+- **学生复习**: 将课堂笔记转换为练习题，强化记忆
+- **职场学习**: 将培训资料制作成题库，检验学习效果
+- **知识梳理**: 通过答题形式重新梳理和巩固知识点
+- **团队培训**: 基于公司内部文档创建培训题目
+
+## 🔮 未来规划
+
+- [ ] 支持更多文档格式（PDF、Word等）
+- [ ] 添加多种题型（填空题、判断题等）
+- [ ] 学习进度追踪和数据分析
+- [ ] 多人协作和分享功能
+- [ ] 移动端应用开发
+
+## 📄 开源协议
+
+本项目采用 MIT 协议开源，欢迎贡献代码和提出建议。
+
+## 🤝 贡献指南
+
+欢迎提交Issue和Pull Request来帮助改进QuizPals！
+
+---
+
+**让学习变得更高效，让知识变得更有趣！** 🎓
