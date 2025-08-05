@@ -3,7 +3,7 @@ import type { AxiosResponse } from "axios";
 
 // 创建 axios 实例
 const service = axios.create({
-    timeout: 10000,
+    timeout: 10000000,
 });
 
 // 请求拦截器

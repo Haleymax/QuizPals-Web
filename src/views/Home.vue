@@ -297,42 +297,51 @@ interface ApiResponse {
 const message = useMessage()
 
 // 从 sessionStorage 中获取题目数据，如果没有则使用默认数据
-const getQuizData = (): ApiResponse => {
+const getQuizData = () => {
   const storedData = sessionStorage.getItem('quizData')
   if (storedData) {
     try {
-      return JSON.parse(storedData)
+      const parsed = JSON.parse(storedData)
+      // 兼容两种结构：{ code, data: { content, filename, size }, msg } 或 { content, filename, size }
+      if (parsed.data && Array.isArray(parsed.data.content)) {
+        return {
+          questions: parsed.data.content,
+          filename: parsed.data.filename || '未知文件',
+          size: parsed.data.size || 0
+        }
+      } else if (Array.isArray(parsed.content)) {
+        return {
+          questions: parsed.content,
+          filename: parsed.filename || '未知文件',
+          size: parsed.size || 0
+        }
+      }
     } catch (error) {
       console.error('解析题目数据失败:', error)
     }
   }
-  
   // 默认数据（如果没有从上传页面传来的数据）
   return {
-    code: 200,
-    data: {
-      content: [
-        {
-          question: "请先上传 Markdown 文件来生成题目",
-          options: [
-            { label: "1", text: "点击右上角上传按钮" },
-            { label: "2", text: "选择 .md 文件" },
-            { label: "3", text: "等待题目生成" },
-            { label: "4", text: "开始答题" }
-          ],
-          answer: "4"
-        }
-      ],
-      filename: "示例题目",
-      size: 0
-    },
-    msg: "请上传文件"
+    questions: [
+      {
+        question: "请先上传 Markdown 文件来生成题目",
+        options: [
+          { label: "1", text: "点击右上角上传按钮" },
+          { label: "2", text: "选择 .md 文件" },
+          { label: "3", text: "等待题目生成" },
+          { label: "4", text: "开始答题" }
+        ],
+        answer: "4"
+      }
+    ],
+    filename: "示例题目",
+    size: 0
   }
 }
 
 const quizData = getQuizData()
-const questions = ref<Question[]>(quizData.data.content)
-const currentFilename = computed(() => quizData.data.filename)
+const questions = ref<Question[]>(quizData.questions)
+const currentFilename = computed(() => quizData.filename)
 
 const currentQuestionIndex = ref(0)
 const selectedAnswer = ref<number | null>(null)
