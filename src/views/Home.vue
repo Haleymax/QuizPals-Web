@@ -37,7 +37,7 @@
             {{ getPageTitle() }}
           </n-text>
           <n-space>
-            <n-time :time="new Date()" format="yyyy-MM-dd HH:mm:ss" />
+            <n-time :time="currentTime" format="yyyy-MM-dd HH:mm:ss" />
           </n-space>
         </n-layout-header>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, h, computed } from 'vue'
+import { ref, h, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { 
   NLayout, NLayoutSider, NLayoutHeader, NLayoutContent, NMenu, NText, NIcon, NSpace, NTime
@@ -67,6 +67,24 @@ const route = useRoute()
 
 // 菜单状态
 const collapsed = ref(false)
+
+// 实时时间
+const currentTime = ref(new Date())
+let timeInterval: number | null = null
+
+// 组件挂载时启动定时器
+onMounted(() => {
+  timeInterval = setInterval(() => {
+    currentTime.value = new Date()
+  }, 1000) // 每秒更新一次
+})
+
+// 组件卸载时清除定时器
+onUnmounted(() => {
+  if (timeInterval) {
+    clearInterval(timeInterval)
+  }
+})
 
 // 根据当前路由确定活跃菜单
 const activeMenu = computed(() => {

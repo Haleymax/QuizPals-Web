@@ -440,12 +440,11 @@ const getProgressText = (progress: UploadProgress): string => {
 
 <style scoped>
 .upload-container {
-  width: 100%;
-  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 24px;
+  min-height: 100vh;
   background: linear-gradient(135deg, #2d3748 0%, #4a5568 50%, #2b6cb0 100%);
-  overflow-y: auto;
-  box-sizing: border-box;
 }
 
 .upload-header {

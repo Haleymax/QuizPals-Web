@@ -7,29 +7,13 @@
     
     <!-- 答题阶段：显示答题界面 -->
     <div v-else class="quiz-stage">
-      <!-- 添加重新开始按钮 -->
-      <div class="quiz-header">
-        <n-button 
-          type="primary" 
-          ghost 
-          @click="restartQuiz"
-          class="restart-btn"
-        >
-          <template #icon>
-            <n-icon :component="RefreshIcon" />
-          </template>
-          重新上传文件
-        </n-button>
-      </div>
-      <QuizPage @quiz-completed="handleQuizCompleted" />
+      <QuizPage @quiz-completed="handleQuizCompleted" @restart-quiz="restartQuiz" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { NButton, NIcon } from 'naive-ui'
-import { Refresh as RefreshIcon } from '@vicons/ionicons5'
 import Upload from '../Upload.vue'
 import QuizPage from '../quiz/QuizPage.vue'
 
@@ -88,22 +72,5 @@ onMounted(() => {
 .quiz-stage {
   height: 100%;
   width: 100%;
-}
-
-.quiz-header {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 1000;
-}
-
-.restart-btn {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.restart-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
 }
 </style>
