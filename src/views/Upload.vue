@@ -193,7 +193,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { uploadFile } from '../api/file_upload'
-import { useRouter } from 'vue-router'
 import { 
   NCard, NSpace, NText, NIcon, NTag, NUpload, NUploadDragger, 
   NButton, NProgress, NAvatar, NEmpty, useMessage, useDialog,
@@ -248,9 +247,13 @@ interface UploadProgress {
   status: 'default' | 'success' | 'error' | 'warning'
 }
 
+// 定义事件发射器
+const emit = defineEmits<{
+  fileUploaded: []
+}>()
+
 const message = useMessage()
 const dialog = useDialog()
-const router = useRouter()
 const uploadRef = ref<UploadInst>()
 
 const fileList = ref<UploadFileInfo[]>([])
@@ -321,6 +324,10 @@ const customRequest = async ({ file, onFinish, onError }: any) => {
       status: 'success'
     }
     message.success(`文件 ${file.name} 上传成功，已生成 ${questionCount} 道题目`)
+    
+    // 触发文件上传成功事件
+    emit('fileUploaded')
+    
     onFinish()
   } catch (error) {
     uploadProgress.value = {
@@ -377,8 +384,13 @@ const generateQuiz = (file: UploadedFile) => {
   if (file.quizData) {
     // 将题目数据存储到 sessionStorage 中
     sessionStorage.setItem('quizData', JSON.stringify(file.quizData))
-    // 跳转到答题页面
-    router.push('/')
+    // 显示成功消息
+    message.success('题目生成完成！可以在答题练习页面开始答题')
+    // 触发存储事件来通知其他组件数据已更新
+    window.dispatchEvent(new Event('storage'))
+    
+    // 触发文件上传成功事件，让父组件切换到答题页面
+    emit('fileUploaded')
   } else {
     message.warning('该文件还没有生成题目，请稍后再试')
   }
@@ -394,7 +406,7 @@ const getFileTypeColor = (type: string): string => {
 }
 
 const getFileTypeIcon = (_type: string) => {
-  return DocumentIcon // 可以根据类型返回不同图标
+  return DocumentIcon
 }
 
 const formatFileSize = (bytes: number): string => {
